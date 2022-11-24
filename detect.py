@@ -1,8 +1,10 @@
 #! /usr/bin/env python3.7
+# -*- coding: utf-8 -*-
 
 import datetime
 import glob
 import os
+import sys
 
 import matplotlib.pyplot as plt
 import numpy as np
@@ -48,6 +50,9 @@ def imgScatter(x, y, image_path, ax=None, zoom=1):
     return artists
 
 def main():
+    if len(sys.argv) < 2:
+        print('Please specify the numbers of clusters')
+        quit()
 
     imagePath = glob.glob(f"{imageFolder}/*")
     features = [] # numpyでやったほうがいいかも?
@@ -65,7 +70,8 @@ def main():
     print(reduced.shape) 
 
     # K-means法を用いてクラスタリング
-    K = 8
+    
+    K = int(sys.argv[1])
     kmeans = KMeans(n_clusters=K).fit(reduced)
     pred_label = kmeans.predict(reduced)
     print(pred_label)
@@ -78,7 +84,7 @@ def main():
     # 画像なし版
     #plt.scatter(x, y, c=pred_label)
     #plt.colorbar()
-    #plt.savefig("plot-dot.png")
+    #plt.savefig(os.path.join(plotFolder, f"{fileName}.png"))
     # plt.show()
 
     # 画像あり版
