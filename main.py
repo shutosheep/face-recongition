@@ -49,6 +49,10 @@ def imgScatter(x, y, image_path, ax=None, zoom=1):
 
     return artists
 
+def prepFolder():
+    os.makedirs(imageCroppedFolder, exist_ok=True)
+    os.makedirs(plotFolder, exist_ok=True)
+    
 def main():
     if len(sys.argv) < 2:
         print('Please specify the numbers of clusters')
@@ -104,4 +108,5 @@ def main():
     return
 
 if __name__ == "__main__":
+    prepFolder()
     main()
